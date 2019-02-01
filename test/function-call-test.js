@@ -40,6 +40,26 @@ describe('function calls', function() {
     );
   });
 
+  it('IF(\'Test Assumption\'!AA35=230,"Case 1", "Case 2")', function() {
+    const tree = buildTree(
+      tokenize('IF(\'Test Assumption\'!AA35=230,"Case 1", "Case 2")'),
+    );
+
+    deepStrictEqual(
+      tree,
+      builder.functionCall(
+        'IF',
+        builder.binaryExpression(
+          '=',
+          builder.cell('Test Assumption!AA35'),
+          builder.number(230),
+        ),
+        builder.text('Case 1'),
+        builder.text('Case 2'),
+      ),
+    );
+  });
+
   it('SUM(1, 2)', function() {
     const tree = buildTree(tokenize('SUM(1, 2)'));
 
