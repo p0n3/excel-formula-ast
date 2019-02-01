@@ -1,5 +1,5 @@
 const {buildTree} = require('../');
-const {tokenize} = require('excel-formula-tokenizer');
+const {tokenize} = require('@modelmap/excel-formula-tokenizer');
 const assert = require('assert');
 const builder = require('../lib/node-builder');
 
