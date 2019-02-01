@@ -1,44 +1,56 @@
 import * as TOKENS from 'excel-formula-tokenizer';
-type Node = BinaryExpressionNode | UnaryExpressionNode | FunctionNode | NumberNode | CellNode | LogicalNode | TextNode | CellRangeNode;
+type Node =
+  | BinaryExpressionNode
+  | UnaryExpressionNode
+  | FunctionNode
+  | NumberNode
+  | CellNode
+  | LogicalNode
+  | TextNode
+  | CellRangeNode
+  | BlankNode;
 
 interface BinaryExpressionNode {
-  type: 'binary-expression',
-  operator: '>' | '<' | '=' | '>=' | '<=' | '+' | '-' | '&',
-  left: Node,
-  right: Node
+  type: 'binary-expression';
+  operator: '>' | '<' | '=' | '>=' | '<=' | '+' | '-' | '&';
+  left: Node;
+  right: Node;
 }
 interface UnaryExpressionNode {
-  type: 'unary-expression',
-  operator: '+' | '-',
-  operand: Node
+  type: 'unary-expression';
+  operator: '+' | '-';
+  operand: Node;
 }
 
 interface FunctionNode {
-  type: 'function',
-  name: string,
-  arguments: Node[]
+  type: 'function';
+  name: string;
+  arguments: Node[];
 }
 interface NumberNode {
-  type: 'number',
-  value: number
+  type: 'number';
+  value: number;
 }
 interface CellNode {
-  type: 'cell',
-  refType?: 'relative' | 'mixed' | 'absolute',
-  key: string
+  type: 'cell';
+  refType?: 'relative' | 'mixed' | 'absolute';
+  key: string;
 }
 interface CellRangeNode {
-  type: 'cell-range',
-  left: Node,
-  right: Node
+  type: 'cell-range';
+  left: Node;
+  right: Node;
 }
 interface LogicalNode {
-  type: 'logical',
-  value: boolean
+  type: 'logical';
+  value: boolean;
 }
 interface TextNode {
-  type: 'text',
-  value: string
+  type: 'text';
+  value: string;
+}
+interface BlankNode {
+  type: 'blank';
 }
 declare function buildTree(tokens: TOKENS.Token[]): Node;
 interface Visitor {
