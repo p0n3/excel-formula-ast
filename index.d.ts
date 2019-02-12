@@ -1,5 +1,5 @@
 import * as TOKENS from 'excel-formula-tokenizer';
-type Node =
+export type Node =
   | BinaryExpressionNode
   | UnaryExpressionNode
   | FunctionNode
@@ -10,50 +10,49 @@ type Node =
   | CellRangeNode
   | BlankNode;
 
-interface BinaryExpressionNode {
+export interface BinaryExpressionNode {
   type: 'binary-expression';
   operator: '>' | '<' | '=' | '>=' | '<=' | '+' | '-' | '&';
   left: Node;
   right: Node;
 }
-interface UnaryExpressionNode {
+export interface UnaryExpressionNode {
   type: 'unary-expression';
   operator: '+' | '-';
   operand: Node;
 }
-
-interface FunctionNode {
+export interface FunctionNode {
   type: 'function';
   name: string;
   arguments: Node[];
 }
-interface NumberNode {
+export interface NumberNode {
   type: 'number';
   value: number;
 }
-interface CellNode {
+export interface CellNode {
   type: 'cell';
   refType?: 'relative' | 'mixed' | 'absolute';
   key: string;
 }
-interface CellRangeNode {
+export interface CellRangeNode {
   type: 'cell-range';
   left: Node;
   right: Node;
 }
-interface LogicalNode {
+export interface LogicalNode {
   type: 'logical';
   value: boolean;
 }
-interface TextNode {
+export interface TextNode {
   type: 'text';
   value: string;
 }
-interface BlankNode {
+export interface BlankNode {
   type: 'blank';
 }
 declare function buildTree(tokens: TOKENS.Token[]): Node;
-interface Visitor {
+export interface Visitor {
   enterCell?(node: CellNode): void;
   exitCell?(node: CellNode): void;
 
