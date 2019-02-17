@@ -1,6 +1,6 @@
-const {buildTree} = require('../');
-const {tokenize} = require('@modelmap/excel-formula-tokenizer');
-const {deepStrictEqual} = require('assert');
+const { buildTree, stringify } = require('../');
+const { tokenize } = require('@modelmap/excel-formula-tokenizer');
+const { deepStrictEqual } = require('assert');
 const builder = require('../lib/node-builder');
 
 const formula = '0-SUM(OFFSET(Q75,,,1,0-MIN($L72,-Admin!Q36)))/$L72';
@@ -39,5 +39,6 @@ describe('Integration: ' + formula, function() {
         ),
       ),
     );
+    deepStrictEqual(stringify(tree), '0 - SUM(OFFSET(Q75, , , 1, 0 - MIN($L72, -Admin!Q36))) / $L72');
   });
 });
