@@ -1,6 +1,6 @@
-const {buildTree} = require('../');
-const {tokenize} = require('@modelmap/excel-formula-tokenizer');
-const {deepStrictEqual} = require('assert');
+const { buildTree, stringify } = require('../');
+const { tokenize } = require('@modelmap/excel-formula-tokenizer');
+const { deepStrictEqual } = require('assert');
 const builder = require('../lib/node-builder');
 
 describe('operators', function() {
@@ -16,6 +16,7 @@ describe('operators', function() {
           builder.binaryExpression('-', builder.number(3), builder.number(4)),
         ),
       );
+      deepStrictEqual(stringify(tree), '1+2>=3-4');
     });
 
     it('1 + 2 & "a"', function() {
@@ -29,6 +30,7 @@ describe('operators', function() {
           builder.text('a'),
         ),
       );
+      deepStrictEqual(stringify(tree), '1+2&"a"');
     });
 
     it('1 + 2 * 3', function() {
@@ -42,6 +44,7 @@ describe('operators', function() {
           builder.binaryExpression('*', builder.number(2), builder.number(3)),
         ),
       );
+      deepStrictEqual(stringify(tree), '1+2*3');
     });
 
     it('1 * 2 ^ 3', function() {
@@ -55,6 +58,7 @@ describe('operators', function() {
           builder.binaryExpression('^', builder.number(2), builder.number(3)),
         ),
       );
+      deepStrictEqual(stringify(tree), '1*2^3');
     });
 
     it('(1 * 2) ^ 3', function() {
@@ -68,6 +72,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
+      deepStrictEqual(stringify(tree), '1*2^3');
     });
   });
 
@@ -84,6 +89,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
+      deepStrictEqual(stringify(tree), '1+2+3');
     });
 
     it('1 + (2 + 3)', function() {
@@ -97,6 +103,7 @@ describe('operators', function() {
           builder.binaryExpression('+', builder.number(2), builder.number(3)),
         ),
       );
+      deepStrictEqual(stringify(tree), '1+2+3');
     });
 
     it('1 / 2 / 3', function() {
@@ -110,6 +117,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
+      deepStrictEqual(stringify(tree), '1/2/3');
     });
 
     it('1 + SUM(A2:A23)', function() {
@@ -122,13 +130,11 @@ describe('operators', function() {
           builder.number(1),
           builder.functionCall(
             'SUM',
-            builder.cellRange(
-              builder.cell('A2', 'relative'),
-              builder.cell('A23', 'relative'),
-            ),
+            builder.cellRange(builder.cell('A2', 'relative'), builder.cell('A23', 'relative')),
           ),
         ),
       );
+      deepStrictEqual(stringify(tree), '1+SUM(A2:A23)');
     });
   });
 });

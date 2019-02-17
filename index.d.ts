@@ -78,3 +78,4 @@ export interface Visitor {
   exitUnaryExpression?(node: UnaryExpressionNode): void;
 }
 declare function visit(tree: Node, visitor: Visitor): void;
+declare function stringify(node: Node): string;
