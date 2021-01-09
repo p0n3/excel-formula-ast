@@ -60,7 +60,7 @@ describe('basic expressions', function() {
     const tree = buildTree(tokenize('1 + 2'));
 
     deepStrictEqual(tree, builder.binaryExpression('+', builder.number(1), builder.number(2)));
-    deepStrictEqual(stringify(tree), '1 + 2');
+    deepStrictEqual(stringify(tree), '1+2');
   });
 
   it('-1 + 2', function() {
@@ -70,20 +70,20 @@ describe('basic expressions', function() {
       tree,
       builder.binaryExpression('+', builder.unaryExpression('-', builder.number(1)), builder.number(2)),
     );
-    deepStrictEqual(stringify(tree), '-1 + 2');
+    deepStrictEqual(stringify(tree), '-1+2');
   });
 
   it('"a" & "b"', function() {
     const tree = buildTree(tokenize('"a" & "b"'));
 
     deepStrictEqual(tree, builder.binaryExpression('&', builder.text('a'), builder.text('b')));
-    deepStrictEqual(stringify(tree), '"a" & "b"');
+    deepStrictEqual(stringify(tree), '"a"&"b"');
   });
 
   it('1 <> "b"', function() {
     const tree = buildTree(tokenize('1 <> "b"'));
 
     deepStrictEqual(tree, builder.binaryExpression('<>', builder.number(1), builder.text('b')));
-    deepStrictEqual(stringify(tree), '1 <> "b"');
+    deepStrictEqual(stringify(tree), '1<>"b"');
   });
 });

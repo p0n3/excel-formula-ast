@@ -38,7 +38,7 @@ describe('function calls', function() {
         builder.number(1),
       ),
     );
-    deepStrictEqual(stringify(tree), 'OFFSET(A1, , , 1)');
+    deepStrictEqual(stringify(tree), 'OFFSET(A1,,,1)');
   });
 
   it('IF(\'Test Assumption\'!AA35=230,"Case 1", "Case 2")', function() {
@@ -53,24 +53,24 @@ describe('function calls', function() {
         builder.text('Case 2'),
       ),
     );
-    deepStrictEqual(stringify(tree), 'IF(\'Test Assumption\'!AA35 = 230, "Case 1", "Case 2")');
+    deepStrictEqual(stringify(tree), 'IF(\'Test Assumption\'!AA35=230,"Case 1","Case 2")');
   });
 
   it('SUM(1, 2)', function() {
-    const tree = buildTree(tokenize('SUM(1, 2)'));
+    const tree = buildTree(tokenize('SUM(1,2)'));
 
     deepStrictEqual(tree, builder.functionCall('SUM', builder.number(1), builder.number(2)));
-    deepStrictEqual(stringify(tree), 'SUM(1, 2)');
+    deepStrictEqual(stringify(tree), 'SUM(1,2)');
   });
 
   it('SUM(1, SUM(2, 3))', function() {
-    const tree = buildTree(tokenize('SUM(1, SUM(2, 3))'));
+    const tree = buildTree(tokenize('SUM(1,SUM(2,3))'));
 
     deepStrictEqual(
       tree,
       builder.functionCall('SUM', builder.number(1), builder.functionCall('SUM', builder.number(2), builder.number(3))),
     );
-    deepStrictEqual(stringify(tree), 'SUM(1, SUM(2, 3))');
+    deepStrictEqual(stringify(tree), 'SUM(1,SUM(2,3))');
   });
 
   it('SUM(10 / 4, SUM(2, 3))', function() {
@@ -84,21 +84,21 @@ describe('function calls', function() {
         builder.functionCall('SUM', builder.number(2), builder.number(3)),
       ),
     );
-    deepStrictEqual(stringify(tree), 'SUM(10 / 4, SUM(2, 3))');
+    deepStrictEqual(stringify(tree), 'SUM(10/4,SUM(2,3))');
   });
 
   it('2 + SUM(1)', function() {
-    const tree = buildTree(tokenize('2 + SUM(1)'));
+    const tree = buildTree(tokenize('2+SUM(1)'));
 
     deepStrictEqual(
       tree,
       builder.binaryExpression('+', builder.number(2), builder.functionCall('SUM', builder.number(1))),
     );
-    deepStrictEqual(stringify(tree), '2 + SUM(1)');
+    deepStrictEqual(stringify(tree), '2+SUM(1)');
   });
 
   it('2 + SUM(1, 2, 3, 4)', function() {
-    const tree = buildTree(tokenize('2 + SUM(1, 2, 3, 4)'));
+    const tree = buildTree(tokenize('2+ SUM(1, 2, 3, 4)'));
 
     deepStrictEqual(
       tree,
@@ -108,7 +108,7 @@ describe('function calls', function() {
         builder.functionCall('SUM', builder.number(1), builder.number(2), builder.number(3), builder.number(4)),
       ),
     );
-    deepStrictEqual(stringify(tree), '2 + SUM(1, 2, 3, 4)');
+    deepStrictEqual(stringify(tree), '2+SUM(1,2,3,4)');
   });
 
   it('SUM(2) + SUM(1)', function() {
@@ -122,11 +122,11 @@ describe('function calls', function() {
         builder.functionCall('SUM', builder.number(1)),
       ),
     );
-    deepStrictEqual(stringify(tree), 'SUM(2) + SUM(1)');
+    deepStrictEqual(stringify(tree), 'SUM(2)+SUM(1)');
   });
 
   it('SUM(SUM(1), 2 + 3)', function() {
-    const tree = buildTree(tokenize('SUM(SUM(1), 2 + 3)'));
+    const tree = buildTree(tokenize('SUM(SUM(1),2 + 3)'));
 
     deepStrictEqual(
       tree,
@@ -136,6 +136,6 @@ describe('function calls', function() {
         builder.binaryExpression('+', builder.number(2), builder.number(3)),
       ),
     );
-    deepStrictEqual(stringify(tree), 'SUM(SUM(1), 2 + 3)');
+    deepStrictEqual(stringify(tree), 'SUM(SUM(1),2+3)');
   });
 });

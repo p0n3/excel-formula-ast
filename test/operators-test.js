@@ -16,7 +16,7 @@ describe('operators', function() {
           builder.binaryExpression('-', builder.number(3), builder.number(4)),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 + 2 >= 3 - 4');
+      deepStrictEqual(stringify(tree), '1+2>=3-4');
     });
 
     it('1 + 2 & "a"', function() {
@@ -30,7 +30,7 @@ describe('operators', function() {
           builder.text('a'),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 + 2 & "a"');
+      deepStrictEqual(stringify(tree), '1+2&"a"');
     });
 
     it('1 + 2 * 3', function() {
@@ -44,7 +44,7 @@ describe('operators', function() {
           builder.binaryExpression('*', builder.number(2), builder.number(3)),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 + 2 * 3');
+      deepStrictEqual(stringify(tree), '1+2*3');
     });
 
     it('1 * 2 ^ 3', function() {
@@ -58,7 +58,7 @@ describe('operators', function() {
           builder.binaryExpression('^', builder.number(2), builder.number(3)),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 * 2 ^ 3');
+      deepStrictEqual(stringify(tree), '1*2^3');
     });
 
     it('(1 * 2) ^ 3', function() {
@@ -72,7 +72,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 * 2 ^ 3');
+      deepStrictEqual(stringify(tree), '1*2^3');
     });
   });
 
@@ -89,7 +89,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 + 2 + 3');
+      deepStrictEqual(stringify(tree), '1+2+3');
     });
 
     it('1 + (2 + 3)', function() {
@@ -103,7 +103,7 @@ describe('operators', function() {
           builder.binaryExpression('+', builder.number(2), builder.number(3)),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 + 2 + 3');
+      deepStrictEqual(stringify(tree), '1+2+3');
     });
 
     it('1 / 2 / 3', function() {
@@ -117,7 +117,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 / 2 / 3');
+      deepStrictEqual(stringify(tree), '1/2/3');
     });
 
     it('1 + SUM(A2:A23)', function() {
@@ -134,7 +134,7 @@ describe('operators', function() {
           ),
         ),
       );
-      deepStrictEqual(stringify(tree), '1 + SUM(A2:A23)');
+      deepStrictEqual(stringify(tree), '1+SUM(A2:A23)');
     });
   });
 });

@@ -113,7 +113,7 @@ describe('cell ranges', function() {
         builder.cellRange(builder.cell('C1', 'relative'), builder.cell('D3', 'relative')),
       ),
     );
-    deepStrictEqual(stringify(tree), 'A1:B3, C1:D3');
+    deepStrictEqual(stringify(tree), 'A1:B3,C1:D3');
   });
 
   it('A1:B3 B1:D3', function() {

@@ -39,6 +39,6 @@ describe('Integration: ' + formula, function() {
         ),
       ),
     );
-    deepStrictEqual(stringify(tree), '0 - SUM(OFFSET(Q75, , , 1, 0 - MIN($L72, -Admin!Q36))) / $L72');
+    deepStrictEqual(stringify(tree), '0-SUM(OFFSET(Q75,,,1,0-MIN($L72,-Admin!Q36)))/$L72');
   });
 });
