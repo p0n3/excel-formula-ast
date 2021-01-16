@@ -47,6 +47,20 @@ describe('operators', function() {
       deepStrictEqual(stringify(tree), '1+2*3');
     });
 
+    it('1 + 2 * 3', function() {
+      const tree = buildTree(tokenize('1 + 2 * 3'));
+
+      deepStrictEqual(
+        tree,
+        builder.binaryExpression(
+          '+',
+          builder.number(1),
+          builder.binaryExpression('*', builder.number(2), builder.number(3)),
+        ),
+      );
+      deepStrictEqual(stringify(tree), '1+2*3');
+    });
+
     it('1 * 2 ^ 3', function() {
       const tree = buildTree(tokenize('1 * 2 ^ 3'));
 
@@ -104,6 +118,34 @@ describe('operators', function() {
         ),
       );
       deepStrictEqual(stringify(tree), '1+2+3');
+    });
+
+    it('1 * (2 + 3)', function() {
+      const tree = buildTree(tokenize('1 * (2 + 3)'));
+
+      deepStrictEqual(
+        tree,
+        builder.binaryExpression(
+          '*',
+          builder.number(1),
+          builder.binaryExpression('+', builder.number(2), builder.number(3)),
+        ),
+      );
+      deepStrictEqual(stringify(tree), '1*(2+3)');
+    });
+
+    it('(2 + 3) * 1', function() {
+      const tree = buildTree(tokenize('(2 + 3) * 1'));
+
+      deepStrictEqual(
+        tree,
+        builder.binaryExpression(
+          '*',
+          builder.binaryExpression('+', builder.number(2), builder.number(3)),
+          builder.number(1),
+        ),
+      );
+      deepStrictEqual(stringify(tree), '(2+3)*1');
     });
 
     it('1 / 2 / 3', function() {
