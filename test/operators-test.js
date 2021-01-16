@@ -86,7 +86,7 @@ describe('operators', function() {
           builder.number(3),
         ),
       );
-      deepStrictEqual(stringify(tree), '1*2^3');
+      deepStrictEqual(stringify(tree), '(1*2)^3');
     });
   });
 
@@ -132,6 +132,11 @@ describe('operators', function() {
         ),
       );
       deepStrictEqual(stringify(tree), '1*(2+3)');
+    });
+
+    it('IF(O39,$M41,IF(O40,N43*(1-$M42)^(1/12),0))', function() {
+      const tree = buildTree(tokenize('IF(O39,$M41,IF(O40,N43*(1-$M42)^(1/12),0))'));
+      deepStrictEqual(stringify(tree), 'IF(O39,$M41,IF(O40,N43*(1-$M42)^(1/12),0))');
     });
 
     it('(2 + 3) * 1', function() {
