@@ -173,4 +173,13 @@ describe('function calls', function() {
         ));
     deepStrictEqual(stringify(tree), '@TRANSPOSE({1,2})');
   });
+
+  it('Custom function transformer', function() {
+    const tree = buildTree(tokenize('MIN(1)'));
+
+    deepStrictEqual(stringify(tree, {
+      isAcceptable: function(node) { return node.name === "MIN" },
+      transform: function(node) { node.name = "MAX"; return node; }
+    }), 'MAX(1)');
+  });
 });

@@ -51,6 +51,10 @@ export interface TextNode {
 export interface BlankNode {
   type: 'blank';
 }
+export interface CustomFunctionTransformer {
+  isAcceptable(node: FunctionNode): boolean;
+  transform(node: FunctionNode): FunctionNode;
+}
 declare function buildTree(tokens: TOKENS.Token[]): Node;
 export interface Visitor {
   enterCell?(node: CellNode): void;
@@ -78,4 +82,4 @@ export interface Visitor {
   exitUnaryExpression?(node: UnaryExpressionNode): void;
 }
 declare function visit(tree: Node, visitor: Visitor): void;
-declare function stringify(node: Node): string;
+declare function stringify(node: Node, customTransformer?: CustomFunctionTransformer): string;
