@@ -177,6 +177,7 @@ describe('operators', function() {
           builder.number(1),
           builder.functionCall(
             'SUM',
+            {},
             builder.cellRange(builder.cell('A2', 'relative'), builder.cell('A23', 'relative')),
           ),
         ),

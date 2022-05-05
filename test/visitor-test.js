@@ -73,7 +73,7 @@ describe('visiting', function () {
     const recorder = createRecorder();
     const number = builder.number(3);
     const text = builder.text('dogs');
-    const fn = builder.functionCall('get', number, text);
+    const fn = builder.functionCall('get', {}, number, text);
 
     visit(fn, recorder);
 

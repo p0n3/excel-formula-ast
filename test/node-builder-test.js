@@ -25,7 +25,7 @@ describe('node builder', function () {
     const arg1 = nodeBuilder.number(1);
     const arg2 = nodeBuilder.number(2);
 
-    const functionCall = nodeBuilder.functionCall('SUM', [arg1, arg2]);
+    const functionCall = nodeBuilder.functionCall('SUM', {}, [arg1, arg2]);
 
     strictEqual(functionCall.type, 'function');
     strictEqual(functionCall.name, 'SUM');
@@ -36,7 +36,7 @@ describe('node builder', function () {
     const arg1 = nodeBuilder.number(1);
     const arg2 = nodeBuilder.number(2);
 
-    const functionCall = nodeBuilder.functionCall('SUM', arg1, arg2);
+    const functionCall = nodeBuilder.functionCall('SUM', {}, arg1, arg2);
 
     strictEqual(functionCall.type, 'function');
     strictEqual(functionCall.name, 'SUM');

@@ -21,7 +21,7 @@ describe('function calls', function() {
   it('SUM(1)', function() {
     const tree = buildTree(tokenize('SUM(1)'));
 
-    deepStrictEqual(tree, builder.functionCall('SUM', builder.number(1)));
+    deepStrictEqual(tree, builder.functionCall('SUM', {}, builder.number(1)));
     deepStrictEqual(stringify(tree), 'SUM(1)');
   });
 
@@ -32,6 +32,7 @@ describe('function calls', function() {
       tree,
       builder.functionCall(
         'OFFSET',
+        {},
         builder.cell('A1', 'relative'),
         builder.blank(),
         builder.blank(),
@@ -48,6 +49,7 @@ describe('function calls', function() {
       tree,
       builder.functionCall(
         'IF',
+        {},
         builder.binaryExpression('=', builder.cell('Test Assumption!AA35'), builder.number(230)),
         builder.text('Case 1'),
         builder.text('Case 2'),
@@ -59,7 +61,7 @@ describe('function calls', function() {
   it('SUM(1, 2)', function() {
     const tree = buildTree(tokenize('SUM(1,2)'));
 
-    deepStrictEqual(tree, builder.functionCall('SUM', builder.number(1), builder.number(2)));
+    deepStrictEqual(tree, builder.functionCall('SUM', {}, builder.number(1), builder.number(2)));
     deepStrictEqual(stringify(tree), 'SUM(1,2)');
   });
 
@@ -68,7 +70,7 @@ describe('function calls', function() {
 
     deepStrictEqual(
       tree,
-      builder.functionCall('SUM', builder.number(1), builder.functionCall('SUM', builder.number(2), builder.number(3))),
+      builder.functionCall('SUM', {}, builder.number(1), builder.functionCall('SUM', {}, builder.number(2), builder.number(3))),
     );
     deepStrictEqual(stringify(tree), 'SUM(1,SUM(2,3))');
   });
@@ -80,8 +82,9 @@ describe('function calls', function() {
       tree,
       builder.functionCall(
         'SUM',
+        {},
         builder.binaryExpression('/', builder.number(10), builder.number(4)),
-        builder.functionCall('SUM', builder.number(2), builder.number(3)),
+        builder.functionCall('SUM', {}, builder.number(2), builder.number(3)),
       ),
     );
     deepStrictEqual(stringify(tree), 'SUM(10/4,SUM(2,3))');
@@ -92,7 +95,7 @@ describe('function calls', function() {
 
     deepStrictEqual(
       tree,
-      builder.binaryExpression('+', builder.number(2), builder.functionCall('SUM', builder.number(1))),
+      builder.binaryExpression('+', builder.number(2), builder.functionCall('SUM', {}, builder.number(1))),
     );
     deepStrictEqual(stringify(tree), '2+SUM(1)');
   });
@@ -105,7 +108,7 @@ describe('function calls', function() {
       builder.binaryExpression(
         '+',
         builder.number(2),
-        builder.functionCall('SUM', builder.number(1), builder.number(2), builder.number(3), builder.number(4)),
+        builder.functionCall('SUM', {}, builder.number(1), builder.number(2), builder.number(3), builder.number(4)),
       ),
     );
     deepStrictEqual(stringify(tree), '2+SUM(1,2,3,4)');
@@ -118,8 +121,8 @@ describe('function calls', function() {
       tree,
       builder.binaryExpression(
         '+',
-        builder.functionCall('SUM', builder.number(2)),
-        builder.functionCall('SUM', builder.number(1)),
+        builder.functionCall('SUM', {}, builder.number(2)),
+        builder.functionCall('SUM', {}, builder.number(1)),
       ),
     );
     deepStrictEqual(stringify(tree), 'SUM(2)+SUM(1)');
@@ -132,7 +135,8 @@ describe('function calls', function() {
       tree,
       builder.functionCall(
         'SUM',
-        builder.functionCall('SUM', builder.number(1)),
+        {},
+        builder.functionCall('SUM', {}, builder.number(1)),
         builder.binaryExpression('+', builder.number(2), builder.number(3)),
       ),
     );
@@ -146,10 +150,27 @@ describe('function calls', function() {
         tree,
         builder.functionCall(
             'ARRAY',
-            builder.functionCall('ARRAYROW', builder.number(1), builder.number(2)),
-            builder.functionCall('ARRAYROW', builder.number(3), builder.number(4)),
+            {},
+            builder.functionCall('ARRAYROW', {}, builder.number(1), builder.number(2)),
+            builder.functionCall('ARRAYROW', {}, builder.number(3), builder.number(4)),
         ),
     );
     deepStrictEqual(stringify(tree), '{1,2;3,4}');
+  });
+
+  it('@TRANSPOSE({1,2})', function() {
+    const tree = buildTree(tokenize('@TRANSPOSE({1,2})'));
+
+    deepStrictEqual(tree,
+        builder.functionCall(
+            'TRANSPOSE',
+            {hasImplicitIntersectionOperator: true},
+            builder.functionCall(
+                'ARRAY',
+                {},
+                builder.functionCall('ARRAYROW', {}, builder.number(1), builder.number(2)),
+            ),
+        ));
+    deepStrictEqual(stringify(tree), '@TRANSPOSE({1,2})');
   });
 });

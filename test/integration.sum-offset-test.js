@@ -18,8 +18,10 @@ describe('Integration: ' + formula, function() {
           '/',
           builder.functionCall(
             'SUM',
+            {},
             builder.functionCall(
               'OFFSET',
+              {},
               builder.cell('Q75', 'relative'),
               builder.blank(),
               builder.blank(),
@@ -29,6 +31,7 @@ describe('Integration: ' + formula, function() {
                 builder.number(0),
                 builder.functionCall(
                   'MIN',
+                  {},
                   builder.cell('$L72', 'mixed'),
                   builder.unaryExpression('-', builder.cell('Admin!Q36')),
                 ),
