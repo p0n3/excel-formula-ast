@@ -1,5 +1,5 @@
 const { buildTree, stringify } = require('../');
-const { tokenize } = require('@modelmap/excel-formula-tokenizer');
+const { tokenize } = require('@p0n3/excel-formula-tokenizer');
 const { deepStrictEqual } = require('assert');
 const builder = require('../lib/node-builder');
 
