@@ -138,4 +138,18 @@ describe('function calls', function() {
     );
     deepStrictEqual(stringify(tree), 'SUM(SUM(1),2+3)');
   });
+
+  it('{1,2;3,4}', function() {
+    const tree = buildTree(tokenize('{1,2;3,4}'));
+
+    deepStrictEqual(
+        tree,
+        builder.functionCall(
+            'ARRAY',
+            builder.functionCall('ARRAYROW', builder.number(1), builder.number(2)),
+            builder.functionCall('ARRAYROW', builder.number(3), builder.number(4)),
+        ),
+    );
+    deepStrictEqual(stringify(tree), '{1,2;3,4}');
+  });
 });
