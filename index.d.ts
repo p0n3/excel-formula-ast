@@ -25,6 +25,7 @@ export interface FunctionNode {
   type: 'function';
   name: string;
   arguments: Node[];
+  attributes: {};
 }
 export interface NumberNode {
   type: 'number';
